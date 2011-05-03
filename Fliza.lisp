@@ -397,9 +397,9 @@
 (defun eliza-punc-substitute (str direction)
   (if (equal 'write direction)
       (dolist (x w-punctuation-subst-list)
-        (setf str (str-substitute (cdr x) (car x) str :test 'equalp)))
+        (setf str (str-substitute (cdr x) (car x) str :test #'equalp)))
       (dolist (x r-punctuation-subst-list)
-        (setf str (str-substitute (car x) (cdr x) str))))
+        (setf str (str-substitute (car x) (cdr x) str :test #'equalp))))
   str)
 (defun eliza-read ()
   (let (s)
@@ -433,6 +433,8 @@
     ("will not" . "won't")
     (" want to " . " wanna ")
     (" got to " . " got to ")
+    ("goodbye" . "byebye")
+    ("goodbye" . "good bye")
     (" not" . "n't")))
 (defconstant fem-rel-restricted-list
   '(mother grandmother sister aunt auntie))
@@ -588,17 +590,17 @@
     (" !" . #\!)
     (" '" . #\')
     (" ;" . #\;)))
-(defun str-substitute (new old s &key from-end (test (lambda (x) nil)) (test-not (lambda (x) nil)) (start 0) end count key)
+(defun str-substitute (new old s &key from-end test test-not (start 0) end count key)
   (when (equal new old) (return-from str-substitute s))
   (let (p (old-length (if (stringp old) (length old) 1)))
     (if (null (setf p (if (stringp old)
 			  (search old s :from-end from-end
-				        ;;;:test test
+				        :test test
 					;;;:test-not test-not
 					:start2 start
 					:end2 end)
 			  (position old s :from-end from-end
-				          ;;;:test test
+				          :test test
 					  ;;;:test-not test-not
 					  :start start
 					  :end end))))
@@ -609,7 +611,7 @@
 				     (if (stringp new) new (string new))
 				     (subseq s (+ p old-length)))
 			:from-end from-end
-			;;;:test test
+			:test test
 			;;;:test-not test-not
 			:start p
 			:end (+ (if (null end) (length s) end) (- (if (stringp new) (length new) 1) old-length))
