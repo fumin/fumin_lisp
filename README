@@ -1,0 +1,23 @@
+Fumin's LISP projects
+For further information, please contact me at r98723077@ntu.edu.tw or awawfumin@gmail.com
+1. Fliza
+   -(load "Fliza.lisp"), (Fliza). To exit, just say byebye to Fliza.
+   -constrained pattern recognition
+   -memorization of previous topics
+   -simple grammatical correction
+2. Othello AI - "fiago"
+   -(load "Othello.lisp"), (othello #'human (fiago 3)). This command calls the fiago AI at level 3. Possible levels are 1 to 6(hardest)
+   -zero-window search
+   -multiple killer-moves
+   -record of optimal moves when able to search to the end of the game
+3. Natural language processing Trigram model
+   -(load "trigram.lisp"), use (analyse-file file) to store contents into trigram database; 
+    use (prob-file file) to calculate the probability of the appearance of the sentence contained in the file.
+   -linear interpolation smoothing
+   -differentiation of special words such as <NUM>, <EMAIL>, and <UNK>
+4. Greplin programming challenge
+   -(load "greplin_challenge.lisp")
+   -Challenge 1: (greplin1) sieves through the list and finds the middle point of the symmetrical word
+   -Challenge 2: (greplin2) A prime Fibonacci number has its entry prime. Uses memoization to calculate Fibonacci
+   -Challenge 3: (greplin3) Although the problem seems to NP complete, came up with a O(2^(n/2)) algorithm 
+                            which is much more efficient than brute force search O(2^n)
